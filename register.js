@@ -4,7 +4,7 @@ console.log("register.js loaded");
 document.addEventListener("DOMContentLoaded", () => {
 
   // 🔹 1. Supabase init
-  const supabaseUrl = "https://nhjrwbfdsorchmggkzkd.supabase.co";
+  const supabaseUrl = "https://nhjrwbfdsorchmggkkzd.supabase.co";
   const supabaseKey =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oanJ3YmZkc29yY2htZ2dra3pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MjI3NjEsImV4cCI6MjA4Njk5ODc2MX0.7o8m61ohZUadrwRUI0uMLn8pitMW88Hegh62IrC12Bw";
 
