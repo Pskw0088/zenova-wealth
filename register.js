@@ -1,3 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const registerBtn = document.getElementById("registerBtn");
+  const inputs = document.querySelectorAll("input");
+
+  registerBtn.addEventListener("click", async () => {
+    console.log("Button clicked"); // 🔥 TEST LINE
 // 🔹 1. Supabase init
 const supabaseUrl = "https://nhjrwbfdsorchmggkzkd.supabase.co";
 
