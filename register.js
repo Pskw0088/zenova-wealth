@@ -1,80 +1,79 @@
+// Supabase SDK loaded check
+console.log("register.js loaded");
+
 document.addEventListener("DOMContentLoaded", () => {
+
+  // 🔹 1. Supabase init
+  const supabaseUrl = "https://nhjrwbfdsorchmggkzkd.supabase.co";
+  const supabaseKey =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oanJ3YmZkc29yY2htZ2dra3pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MjI3NjEsImV4cCI6MjA4Njk5ODc2MX0.7o8m61ohZUadrwRUI0uMLn8pitMW88Hegh62IrC12Bw";
+
+  const supabase = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+  );
+
+  // 🔹 2. Elements
   const registerBtn = document.getElementById("registerBtn");
   const inputs = document.querySelectorAll("input");
 
+  if (!registerBtn) {
+    console.error("Register button not found");
+    return;
+  }
+
+  // 🔹 3. Click handler
   registerBtn.addEventListener("click", async () => {
-    console.log("Button clicked"); // 🔥 TEST LINE
-// 🔹 1. Supabase init
-const supabaseUrl = "https://nhjrwbfdsorchmggkzkd.supabase.co";
+    console.log("Button clicked");
 
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oanJ3YmZkc29yY2htZ2dra3pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MjI3NjEsImV4cCI6MjA4Njk5ODc2MX0.7o8m61ohZUadrwRUI0uMLn8pitMW88Hegh62IrC12Bw";
+    const fullName = inputs[0].value.trim();
+    const email = inputs[1].value.trim();
+    const mobile = inputs[2].value.trim();
+    const password = inputs[3].value;
+    const confirmPassword = inputs[4].value;
 
-const supabase = window.supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-);
+    // Validation
+    if (!fullName || !email || !mobile || !password || !confirmPassword) {
+      alert("Please fill all fields");
+      return;
+    }
 
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-// 🔹 2. Form elements
-const registerBtn = document.querySelector("button");
-const inputs = document.querySelectorAll("input");
+    // 🔹 4. Supabase signup
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-registerBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
-  const fullName = inputs[0].value;
-  const email = inputs[1].value;
-  const mobile = inputs[2].value;
-  const password = inputs[3].value;
-  const confirmPassword = inputs[4].value;
+    // 🔹 5. Insert profile
+    const userId = data.user.id;
 
-  // 🔸 Basic validation
-  if (!fullName || !email || !mobile || !password || !confirmPassword) {
-    alert("Please fill all fields");
-    return;
-  }
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert([
+        {
+          id: userId,
+          full_name: fullName,
+          mobile: mobile,
+        },
+      ]);
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
+    if (profileError) {
+      alert(profileError.message);
+      return;
+    }
 
-  // 🔹 3. Supabase Auth signup
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
+    alert("Registration successful! Please login.");
+    window.location.href = "login.html";
   });
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  // 🔹 4. Save extra profile data
-  const userId = data.user.id;
-
-  const { error: profileError } = await supabase
-    .from("profiles")
-    .insert([
-      {
-        id: userId,
-        full_name: fullName,
-        mobile: mobile,
-      },
-    ]);
-
-  if (profileError) {
-    alert(profileError.message);
-    return;
-  }
-
-  alert("Registration successful! Please login.");
-  window.location.href = "login.html";
 });
-
-    document.addEventListener("DOMContentLoaded", () => {
-  // saara tumhara code yahan
-});
-
-
