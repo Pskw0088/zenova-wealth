@@ -73,8 +73,8 @@ registerBtn.addEventListener("click", async (e) => {
   window.location.href = "login.html";
 });
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="register.js"></script>
-</body>
-</html>
+    document.addEventListener("DOMContentLoaded", () => {
+  // saara tumhara code yahan
+});
+
 
